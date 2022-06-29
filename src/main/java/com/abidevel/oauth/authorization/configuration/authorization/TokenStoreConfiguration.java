@@ -2,7 +2,6 @@ package com.abidevel.oauth.authorization.configuration.authorization;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -44,7 +44,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             .antMatchers("/**")
-            .permitAll();
+            .permitAll()
+            .and()
+            .antMatcher("**")
+            .authorizeRequests()
+            .and()
+            .headers()
+            .frameOptions()
+            .disable();
     }
 
     
