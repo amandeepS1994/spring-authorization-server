@@ -1,5 +1,6 @@
 package com.abidevel.oauth.authorization.configuration.authorization;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -27,7 +28,7 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
     private final TokenStoreConfiguration tokenStoreConfiguration;
 
 
-    public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager, UserDetailsService userDetailsService, TokenStoreConfiguration tokenStoreConfiguration) {
+    public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager,  @Qualifier("byUsername") UserDetailsService userDetailsService, TokenStoreConfiguration tokenStoreConfiguration) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.tokenStoreConfiguration = tokenStoreConfiguration;

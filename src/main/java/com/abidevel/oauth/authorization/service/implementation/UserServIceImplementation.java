@@ -70,5 +70,17 @@ public class UserServIceImplementation implements UserService {
         user.setCreatedAt(LocalDateTime.now());
         return Optional.ofNullable(userRepository.save(user));
     }
+
+
+    @Override
+    public Optional<User> retrieveUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
+
+    @Override
+    public Optional<User> retreieveUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
     
 }

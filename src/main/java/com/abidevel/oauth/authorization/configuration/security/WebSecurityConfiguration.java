@@ -55,13 +55,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     
-    @Bean
-    public UserDetailsService userDetailService () {
-        InMemoryUserDetailsManager userDetailService = new InMemoryUserDetailsManager();
-        // Configure the application to utilize in memory authentication.
-        userDetailService.createUser(new User(userConfiguration.getUsername(), userConfiguration.getPassword(), Collections.singleton(new SimpleGrantedAuthority("read"))));
-        return userDetailService;
-    }
+    // @Bean
+    // public UserDetailsService userDetailService () {
+    //     InMemoryUserDetailsManager userDetailService = new InMemoryUserDetailsManager();
+    //     // Configure the application to utilize in memory authentication.
+    //     userDetailService.createUser(new User(userConfiguration.getUsername(), userConfiguration.getPassword(), Collections.singleton(new SimpleGrantedAuthority("read"))));
+    //     return userDetailService;
+    // }
 
 
     @Bean

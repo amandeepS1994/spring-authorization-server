@@ -9,4 +9,6 @@ import com.abidevel.oauth.authorization.model.request.CreateUserRequest;
 public interface UserService {
     List<User> findAllUsers();
     Optional<User> createNewUser(CreateUserRequest user);
+    Optional<User> retrieveUserByUsername (String username);
+    Optional<User> retreieveUserByEmail (String email);
 }
