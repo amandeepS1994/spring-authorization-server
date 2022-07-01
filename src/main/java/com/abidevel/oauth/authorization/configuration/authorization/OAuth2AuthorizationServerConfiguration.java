@@ -11,12 +11,16 @@ import org.springframework.security.oauth2.config.annotation.configurers.ClientD
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
+import org.springframework.security.oauth2.provider.ClientDetailsService;
 import org.springframework.security.oauth2.provider.token.DefaultTokenServices;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Configuration
 @EnableAuthorizationServer
 public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerConfigurerAdapter {
@@ -25,12 +29,14 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
   
     private final UserDetailsService userDetailsService;
 
+    private final ClientDetailsService clientDetailService;
+
     private final TokenStoreConfiguration tokenStoreConfiguration;
 
-
-    public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager,  @Qualifier("byUsername") UserDetailsService userDetailsService, TokenStoreConfiguration tokenStoreConfiguration) {
+    public OAuth2AuthorizationServerConfiguration(AuthenticationManager authenticationManager, @Qualifier("byUsername") UserDetailsService userDetailsService, @Qualifier("clientDetailByUsername") ClientDetailsService clientDetailService, TokenStoreConfiguration tokenStoreConfiguration) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
+        this.clientDetailService = clientDetailService;
         this.tokenStoreConfiguration = tokenStoreConfiguration;
     }
 
@@ -47,11 +53,12 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
-      clients.inMemory()
-              .withClient("client")
-              .secret("secret")
-              .authorizedGrantTypes("authorization_code", "password", "refresh_token")
-              .scopes("read");
+        clients.withClientDetails(clientDetailService);
+    //   clients.inMemory()
+    //           .withClient("client")
+    //           .secret("secret")
+    //           .authorizedGrantTypes("authorization_code", "password", "refresh_token")
+    //           .scopes("read");
     }
 
     @Bean
@@ -70,7 +77,6 @@ public class OAuth2AuthorizationServerConfiguration extends AuthorizationServerC
 
     private JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        
         converter.setKeyPair(new KeyStoreKeyFactory(
             new ClassPathResource(
                 tokenStoreConfiguration.getPrivateKey()), 

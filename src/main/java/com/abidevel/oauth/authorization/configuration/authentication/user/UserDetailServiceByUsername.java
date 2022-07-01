@@ -1,8 +1,9 @@
-package com.abidevel.oauth.authorization.configuration.authentication;
+package com.abidevel.oauth.authorization.configuration.authentication.user;
 
 import java.util.Optional;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -10,22 +11,26 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import com.abidevel.oauth.authorization.model.entity.User;
 import com.abidevel.oauth.authorization.service.UserService;
 
-@Configuration(value = "byEmail")
-public class UserDetailServiceByEmail implements UserDetailsService {
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@Primary
+@Configuration(value = "byUsername")
+public class UserDetailServiceByUsername implements UserDetailsService {
 
     private final UserService userService;
 
-    public UserDetailServiceByEmail (UserService uService) {
+    public UserDetailServiceByUsername (UserService uService) {
         this.userService = uService;
     }
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<User> optionalUser = this.userService.retreieveUserByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        Optional<User> optionalUser = this.userService.retrieveUserByUsername(username);
         if (optionalUser.isPresent()) {
             return new UserDetail(optionalUser.get());
         }
-        throw new UsernameNotFoundException(email);
+        throw new UsernameNotFoundException(username);
     }
     
 }

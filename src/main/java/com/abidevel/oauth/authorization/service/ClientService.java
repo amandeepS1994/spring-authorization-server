@@ -9,4 +9,8 @@ import com.abidevel.oauth.authorization.model.request.CreateClientRequest;
 public interface ClientService {
     List<Client> retrieveAllClients();
     Optional<Client> createClient(CreateClientRequest createClient);
+    Optional<Client> findClientById (int clientId);
+    Optional<Client> findClientById (Long clientId);
+    Optional<Client> findClientByUsername (String username);
+    Optional<Client> findByClientById(String clientId);
 }

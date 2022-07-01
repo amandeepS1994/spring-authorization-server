@@ -84,5 +84,25 @@ public class ClientServiceImplementation  implements ClientService{
     private boolean checkIfValuesArePresent (CreateClientRequest clientRequest) {
         return !clientRequest.getUsername().isEmpty() && !clientRequest.getSecret().isEmpty() && Objects.nonNull(clientRequest.getGrantType()) && Objects.nonNull(clientRequest.getScopeType());
     }
+
+    @Override
+    public Optional<Client> findClientById(int clientId) {
+        return clientRepository.findById(clientId);
+    }
+
+    @Override
+    public Optional<Client> findClientById(Long clientId) {
+            return clientRepository.findById(clientId);
+    }
+
+    @Override
+    public Optional<Client> findClientByUsername(String username) {
+        return clientRepository.findByUsername(username);
+    }
+
+    @Override
+    public Optional<Client> findByClientById(String clientId) {
+        return clientRepository.findById(clientId);
+    }
      
 }

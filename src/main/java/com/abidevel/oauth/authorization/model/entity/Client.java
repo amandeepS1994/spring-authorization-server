@@ -39,13 +39,13 @@ public class Client {
     private String secret;
     private LocalDateTime createdAt;
     @Builder.Default
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Grant.class)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Grant.class)
     @JoinTable(name = "client_grant_type", 
     joinColumns = @JoinColumn(table = "client", nullable = false, name = "client_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(table = "grant_type", nullable = false, name = "grant_id", referencedColumnName = "id"))
     private Set<Grant> grants = new HashSet<>();
     @Builder.Default
-    @ManyToMany(fetch = FetchType.LAZY, targetEntity = Scope.class)
+    @ManyToMany(fetch = FetchType.EAGER, targetEntity = Scope.class)
     @JoinTable(name = "client_scope",
     joinColumns = @JoinColumn(table = "client", nullable = false, name = "client_id", referencedColumnName = "id"),
     inverseJoinColumns = @JoinColumn(table = "scope",nullable = false, name = "scope_id", referencedColumnName = "id"))

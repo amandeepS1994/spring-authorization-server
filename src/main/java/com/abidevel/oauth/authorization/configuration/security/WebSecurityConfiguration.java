@@ -10,15 +10,14 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 
 import com.abidevel.oauth.authorization.configuration.UserConfiguration;
 
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
@@ -46,9 +45,6 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
             .antMatchers("/**")
             .permitAll()
             .and()
-            .antMatcher("**")
-            .authorizeRequests()
-            .and()
             .headers()
             .frameOptions()
             .disable();
@@ -56,6 +52,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     
     // @Bean
+    // @Primary
     // public UserDetailsService userDetailService () {
     //     InMemoryUserDetailsManager userDetailService = new InMemoryUserDetailsManager();
     //     // Configure the application to utilize in memory authentication.

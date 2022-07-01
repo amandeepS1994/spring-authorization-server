@@ -1,4 +1,4 @@
-package com.abidevel.oauth.authorization.configuration.authentication;
+package com.abidevel.oauth.authorization.configuration.authentication.user;
 
 import org.springframework.security.core.GrantedAuthority;
 

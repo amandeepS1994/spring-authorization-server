@@ -22,7 +22,7 @@ create table user (
     email varchar(25),
     username varchar(25),
     created_at DATETIME,
-    password varchar(25), 
+    password varchar(255), 
     CONSTRAINT un_username UNIQUE(username),
     CONSTRAINT un_email UNIQUE (email),
     CONSTRAINT pk_id PRIMARY KEY (id)
